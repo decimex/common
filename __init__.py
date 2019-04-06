@@ -1,1 +1,1 @@
-name = "decimex_modules"
+name = "decimex"

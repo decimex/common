@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="decimex_modules",
+    name="decimex",
     version="0.0.1",
     author="Michael Zion",
     author_email="noisleahcim@gmail.com",
