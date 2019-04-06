@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="common-modules",
+    name="decimex_modules",
     version="0.0.1",
     author="Michael Zion",
     author_email="noisleahcim@gmail.com",

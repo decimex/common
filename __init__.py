@@ -1,1 +1,1 @@
-name = "common-modules"
+name = "decimex_modules"
