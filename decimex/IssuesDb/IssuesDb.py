@@ -14,11 +14,11 @@ class IssuesDb():
         self.port      = port
         self.db_name   = db_name
         self.initialize()
-
+        
     base = declarative_base()
 
     def initialize(self):
-        db_string = "{0}://{1}:{2}@{3}:{4}/{5}".format(db_type, user_name, password, host, port, db_name)
+        db_string = "{0}://{1}:{2}@{3}:{4}/{5}".format(self.db_type, self.user_name, self.password, self.host, self.port, self.db_name)
         self.db = create_engine(db_string)
         self.Session = sessionmaker(self.db)
 
