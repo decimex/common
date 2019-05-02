@@ -14,7 +14,7 @@ class IssuesDb():
         self.port      = port
         self.db_name   = db_name
         self.initialize()
-        
+
     base = declarative_base()
 
     def initialize(self):
@@ -41,6 +41,10 @@ class IssuesDb():
             query = query.filter(Link.is_parsed == is_parsed)
         if url is None and is_parsed is None:
             return None
+        return query.all()
+
+    def get_first_link():
+        query = session.query(Link.is_parsed == False).first()
         return query.all()
 
     def update_link_is_parsed(self, session, url, is_parsed):
