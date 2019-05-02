@@ -43,7 +43,7 @@ class IssuesDb():
             return None
         return query.all()
 
-    def get_first_link():
+    def get_first_link(self, session):
         query = session.query(Link.is_parsed == False).first()
         return query.all()
 
