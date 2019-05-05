@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Integer
 from sqlalchemy import Column, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -29,36 +29,36 @@ class IssuesDb():
     def create_defined_tables(self):
         self.base.metadata.create_all(self.db)
 
-    def add_link(self, session, url):
-        link = Link(url=url)
+    def add_link(self, session, url, project, number):
+        link = IssueLink(url=url, project=project, number=number)
         session.add(link)
 
     def get_link(self, session, url=None, is_parsed=None):
-        query = session.query(Link)
+        query = session.query(IssueLink)
         if url is not None:
-            query = query.filter(Link.url == url)
+            query = query.filter(IssueLink.url == url)
         if is_parsed is not None:
-            query = query.filter(Link.is_parsed == is_parsed)
+            query = query.filter(IssueLink.is_parsed == is_parsed)
         if url is None and is_parsed is None:
             return None
         return query.all()
 
     def get_first_link(self, session):
-        query = session.query(Link.is_parsed == False).first()
-        return query.all()
+        query = session.query(IssueLink.is_parsed == False).first()
+        return query
 
     def update_link_is_parsed(self, session, url, is_parsed):
         session. \
-        query(Link). \
-        filter(Link.url == url). \
+        query(IssueLink). \
+        filter(IssueLink.url == url). \
         update({"is_parsed": is_parsed})
 
     def delete_link(self, session, url=None, is_parsed=None):
-        query = session.query(Link)
+        query = session.query(IssueLink)
         if url is not None:
-            query = query.filter(Link.url == url)
+            query = query.filter(IssueLink.url == url)
         if is_parsed is not None:
-            query = query.filter(Link.is_parsed == is_parsed)
+            query = query.filter(IssueLink.is_parsed == is_parsed)
         if url is None and is_parsed is None:
             return None
         return query.delete()
@@ -79,8 +79,11 @@ class WrappedSession(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.session.rollback()
 
-class Link(IssuesDb.base):
+
+class IssueLink(IssuesDb.base):
     __tablename__ = 'links'
     url = Column(String, primary_key=True, unique=True, nullable=False)
+    project = Column(String)
+    number = Column(Integer)
     is_parsed = Column(Boolean, unique=False, server_default='false', default=False)
     time_created = Column(DateTime(timezone=True), server_default=func.now())
