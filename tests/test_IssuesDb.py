@@ -16,6 +16,7 @@ def test_sanity():
         db.add_link(session, "blabla")
         db.add_link(session, "gaga")
         db.get_link(session, url="gaga")
+        db.get_first_link(session)
         db.update_link_is_parsed(session, url="gaga", is_parsed=False)
         db.delete_link(session, is_parsed=True)
         db.commit_session(session)
